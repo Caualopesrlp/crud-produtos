@@ -72,8 +72,12 @@ class ProdutoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id, ProdutoServiceInterface $service)
     {
-        //
+        $service->deletar($id);
+
+        return redirect()
+        ->route('produtos.index')
+        ->with('success', 'Produto excluído com sucesso!');
     }
 }

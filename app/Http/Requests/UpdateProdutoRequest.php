@@ -35,4 +35,18 @@ class UpdateProdutoRequest extends FormRequest
             'descricao' => 'nullable|string',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'nome.required' => 'O nome do produto é obrigatório.',
+            'nome.max' => 'O nome não pode ter mais que 255 caracteres.',
+
+            'preco.required' => 'Informe o preço do produto.',
+            'preco.numeric' => 'O preço deve ser um valor numérico.',
+            'preco.min' => 'O preço deve ser maior que zero.',
+
+            'descricao.string' => 'A descrição deve ser um texto válido.',
+        ];
+    }
 }
