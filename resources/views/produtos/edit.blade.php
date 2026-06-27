@@ -1,55 +1,85 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Produto</title>
-</head>
+@section('title', 'Editar Produto')
 
-<body>
-    <h1>Editar Produto</h1>
+@section('content')
 
-    <form method="POST" action="{{ route('produtos.update', $produto->id) }}">
-        @csrf
-        @method('PUT')
+<h1 class="mb-4">Editar Produto</h1>
 
-        <div>
-            <label>Nome</label><br>
-            <input type="text" name="nome" value="{{ old('nome', $produto->nome) }}">
+<div class="card shadow-sm">
+    <div class="card-body">
 
-            @error('nome')
-            <small style="color:red">{{ $message }}</small>
-            @enderror
-        </div>
+        <form method="POST" action="{{ route('produtos.update', $produto->id) }}">
+            @csrf
+            @method('PUT')
 
-        <br>
+            {{-- Nome --}}
+            <div class="mb-3">
+                <label class="form-label">Nome</label>
 
-        <div>
-            <label>Preço</label><br>
-            <input type="number" step="0.01" name="preco"
-                value="{{ old('preco', $produto->preco) }}">
+                <input
+                    type="text"
+                    name="nome"
+                    value="{{ old('nome', $produto->nome) }}"
+                    class="form-control @error('nome') is-invalid @enderror"
+                >
 
-            @error('preco')
-            <small style="color:red">{{ $message }}</small>
-            @enderror
-        </div>
+                @error('nome')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
 
-        <br>
+            {{-- Preço --}}
+            <div class="mb-3">
+                <label class="form-label">Preço</label>
 
-        <div>
-            <label>Descrição</label><br>
-            <textarea name="descricao">{{ old('descricao', $produto->descricao) }}</textarea>
+                <input
+                    type="number"
+                    step="0.01"
+                    name="preco"
+                    value="{{ old('preco', $produto->preco) }}"
+                    class="form-control @error('preco') is-invalid @enderror"
+                >
 
-            @error('descricao')
-            <small style="color:red">{{ $message }}</small>
-            @enderror
-        </div>
+                @error('preco')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
 
-        <br>
+            {{-- Descrição --}}
+            <div class="mb-3">
+                <label class="form-label">Descrição</label>
 
-        <button type="submit">Atualizar</button>
-    </form>
-</body>
+                <textarea
+                    name="descricao"
+                    class="form-control @error('descricao') is-invalid @enderror"
+                >{{ old('descricao', $produto->descricao) }}</textarea>
 
-</html>
+                @error('descricao')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            {{-- Botões --}}
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    Atualizar
+                </button>
+
+                <a href="{{ route('produtos.index') }}" class="btn btn-secondary">
+                    Voltar
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@endsection

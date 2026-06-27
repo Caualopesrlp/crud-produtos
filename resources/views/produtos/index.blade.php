@@ -1,46 +1,81 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar Produtos</title>
-</head>
+@section('title', 'Lista de Produtos')
 
-<body>
-    <h1>Lista de Produtos</h1>
+@section('content')
 
-<a href="{{ route('produtos.create') }}">Novo Produto</a>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Produtos</h1>
 
-@if(session('success'))
-    <p style="color: green">{{ session('success') }}</p>
-@endif
+    <a href="{{ route('produtos.create') }}" class="btn btn-primary">
+        + Novo Produto
+    </a>
+</div>
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>Nome</th>
-        <th>Preço</th>
-        <th>Descrição</th>
-        <th>Ações</th>
-    </tr>
+<div class="card shadow-sm">
+    <div class="card-body p-0">
 
-    @foreach($produtos as $produto)
-        <tr>
-            <td>{{ $produto->nome }}</td>
-            <td>{{ $produto->preco }}</td>
-            <td>{{ $produto->descricao }}</td>
-            <td>
-                <a href="{{ route('produtos.edit', $produto->id) }}">Editar</a>
+        <table class="table table-hover mb-0 align-middle">
 
-                <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" style="display:inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Excluir</button>
-                </form>
-            </td>
-        </tr>
-    @endforeach
-</table>
-</body>
+            <thead class="table-dark">
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Descrição</th>
+                    <th width="180">Ações</th>
+                </tr>
+            </thead>
 
-</html>
+            <tbody>
+
+                @forelse($produtos as $produto)
+                <tr>
+                    <td>{{ $produto->nome }}</td>
+
+                    <td>
+                        R$ {{ number_format($produto->preco, 2, ',', '.') }}
+                    </td>
+
+                    <td>
+                        {{ Str::limit($produto->descricao, 40) }}
+                    </td>
+
+                    <td class="d-flex gap-2">
+
+                        <a href="{{ route('produtos.edit', $produto->id) }}"
+                            class="btn btn-sm btn-warning">
+                            Editar
+                        </a>
+
+                        <form action="{{ route('produtos.destroy', $produto->id) }}"
+                            method="POST"
+                            onsubmit="return confirm('Tem certeza que deseja excluir este produto?')">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Excluir
+                            </button>
+
+                        </form>
+
+                    </td>
+                </tr>
+
+                @empty
+                <tr>
+                    <td colspan="4" class="text-center py-4">
+                        Nenhum produto cadastrado
+                    </td>
+                </tr>
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+@endsection
