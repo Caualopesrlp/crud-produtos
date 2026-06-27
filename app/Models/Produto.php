@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Produto extends Model
 {
-    protected $fillable = [
+    protected array $fillable = [
         'nome',
         'preco',
         'descricao'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'preco' => 'decimal:2',
+        ];
+    }
 }
