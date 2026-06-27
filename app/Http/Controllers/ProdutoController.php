@@ -15,10 +15,11 @@ class ProdutoController extends Controller
     public function index()
     {
         $search = request('search');
+        $sort = request('sort', 'nome');
 
-        $produtos = $this->service->listarTodos($search);
+        $produtos = $this->service->listarTodos($search, $sort);
 
-        return view('produtos.index', compact('produtos'));
+        return view('produtos.index', compact('produtos', 'sort'));
     }
 
     public function create()

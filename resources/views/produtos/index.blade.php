@@ -14,26 +14,48 @@
 
 <form method="GET" action="{{ route('produtos.index') }}" class="mb-3">
 
-    <div class="input-group">
-        <input
-            type="text"
-            name="search"
-            class="form-control"
-            placeholder="Buscar produto..."
-            value="{{ request('search') }}">
+    <div class="row g-2 align-items-center">
 
-        <button class="btn btn-primary">
-            Buscar
-        </button>
+        <div class="col">
+            <input type="text"
+                name="search"
+                class="form-control"
+                value="{{ request('search') }}"
+                placeholder="Buscar produto...">
+        </div>
+
+        <div class="col-auto">
+            <select name="sort" class="form-select" onchange="this.form.submit()">
+                <option value="nome" {{ request('sort') == 'nome' ? 'selected' : '' }}>
+                    Nome
+                </option>
+                <option value="preco" {{ request('sort') == 'preco' ? 'selected' : '' }}>
+                    Preço
+                </option>
+            </select>
+        </div>
+
+        <div class="col-auto">
+            <button class="btn btn-primary" type="submit">
+                Buscar
+            </button>
+        </div>
+
+        <div class="col-auto">
+            <a href="{{ route('produtos.index') }}" class="btn btn-secondary">
+                Limpar
+            </a>
+        </div>
+
     </div>
 
 </form>
 
 <div class="card shadow-sm">
 
-    <div class="card-body p-0">
+    <div class="card-body">
 
-        <table class="table table-hover mb-0 align-middle">
+        <table class="table table-hover align-middle mb-0">
 
             <thead class="table-dark">
                 <tr>
@@ -80,7 +102,6 @@
 
                     </td>
                 </tr>
-
                 @empty
                 <tr>
                     <td colspan="4" class="text-center py-4">
@@ -94,7 +115,7 @@
         </table>
 
         <div class="d-flex justify-content-center mt-3">
-            {{ $produtos->links() }}
+            {{ $produtos->appends(request()->query())->links() }}
         </div>
 
     </div>

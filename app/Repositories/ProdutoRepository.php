@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ProdutoRepository implements ProdutoRepositoryInterface
 {
-    public function all(?string $search = null): LengthAwarePaginator
+    public function all(?string $search = null, string $sort = 'nome'): LengthAwarePaginator
     {
-        return Produto::when($search, function ($query, $search){
+        return Produto::when($search, function ($query, $search) {
             $query->where('nome', 'like', "%{$search}%");
         })
+        ->orderBy($sort)
         ->paginate(10);
     }
 

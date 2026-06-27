@@ -14,9 +14,11 @@ class ProdutoService implements ProdutoServiceInterface
         protected ProdutoRepositoryInterface $repository
     ) {}
 
-    public function listarTodos(?string $search = null): LengthAwarePaginator
+    public function listarTodos(
+        ?string $search = null, string $sort = 'nome'
+        ): LengthAwarePaginator
     {
-        return $this->repository->all($search);
+        return $this->repository->all($search, $sort);
     }
 
     public function criar(array $data): Produto
