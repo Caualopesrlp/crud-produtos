@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use App\Models\Produto;
-use App\Services\Interfaces\ProdutoServiceInterface;
 use App\Repositories\Interfaces\ProdutoRepositoryInterface;
+use App\Services\Interfaces\ProdutoServiceInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProdutoService implements ProdutoServiceInterface
@@ -13,9 +14,9 @@ class ProdutoService implements ProdutoServiceInterface
         protected ProdutoRepositoryInterface $repository
     ) {}
 
-    public function listarTodos(): Collection
+    public function listarTodos(?string $search = null): LengthAwarePaginator
     {
-        return $this->repository->all();
+        return $this->repository->all($search);
     }
 
     public function criar(array $data): Produto

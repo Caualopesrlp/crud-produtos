@@ -14,7 +14,9 @@ class ProdutoController extends Controller
     
     public function index()
     {
-        $produtos = $this->service->listarTodos();
+        $search = request('search');
+
+        $produtos = $this->service->listarTodos($search);
 
         return view('produtos.index', compact('produtos'));
     }

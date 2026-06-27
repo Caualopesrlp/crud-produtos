@@ -12,7 +12,25 @@
     </a>
 </div>
 
+<form method="GET" action="{{ route('produtos.index') }}" class="mb-3">
+
+    <div class="input-group">
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Buscar produto..."
+            value="{{ request('search') }}">
+
+        <button class="btn btn-primary">
+            Buscar
+        </button>
+    </div>
+
+</form>
+
 <div class="card shadow-sm">
+
     <div class="card-body p-0">
 
         <table class="table table-hover mb-0 align-middle">
@@ -37,7 +55,7 @@
                     </td>
 
                     <td>
-                        {{ Str::limit($produto->descricao, 40) }}
+                        {{ \Illuminate\Support\Str::limit($produto->descricao, 40) }}
                     </td>
 
                     <td class="d-flex gap-2">
@@ -74,6 +92,10 @@
             </tbody>
 
         </table>
+
+        <div class="d-flex justify-content-center mt-3">
+            {{ $produtos->links() }}
+        </div>
 
     </div>
 </div>

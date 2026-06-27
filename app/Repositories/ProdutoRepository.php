@@ -2,15 +2,19 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
 use App\Models\Produto;
 use App\Repositories\Interfaces\ProdutoRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProdutoRepository implements ProdutoRepositoryInterface
 {
-    public function all(): Collection
+    public function all(?string $search = null): LengthAwarePaginator
     {
-        return Produto::all();
+        return Produto::when($search, function ($query, $search){
+            $query->where('nome', 'like', "%{$search}%");
+        })
+        ->paginate(10);
     }
 
     public function create(array $data): Produto

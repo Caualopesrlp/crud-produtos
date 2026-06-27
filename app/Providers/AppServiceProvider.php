@@ -2,13 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-
-use App\Services\Interfaces\ProdutoServiceInterface;
-use App\Services\ProdutoService;
-
 use App\Repositories\Interfaces\ProdutoRepositoryInterface;
 use App\Repositories\ProdutoRepository;
+use App\Services\Interfaces\ProdutoServiceInterface;
+use App\Services\ProdutoService;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        Paginator::useBootstrap();
     }
 }
