@@ -1,6 +1,13 @@
+
 # CRUD de Cadastro de Produtos - Laravel
 
 Projeto simples de CRUD para cadastro de produtos desenvolvido com Laravel, com foco em aprendizado prático de arquitetura e boas práticas.
+
+---
+
+## 📷 Demonstração
+
+<img width="1340" height="624" alt="Screenshot_1" src="https://github.com/user-attachments/assets/c17ba2b4-9c35-4779-9ab6-cbacc156ec38" />
 
 ---
 
